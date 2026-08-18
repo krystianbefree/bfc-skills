@@ -26,7 +26,7 @@ w połowie linijki, i tylko na tyle, na ile to potrzebne, żeby propozycja była
 Lista technicznych zadań zamiast rezultatu. "Konfiguracja SSL, optymalizacja bazy,
 aktualizacja wtyczek, kompresja obrazów."
 
-Klient nie kupuje belek. Kupuje przejście na drugą stronę.
+Klient płaci za to, co się u niego zmieni, nie za spis technicznych czynności.
 Zamień listę na jedno zdanie o tym, co się u niego zmieni.
 
 ---

@@ -181,7 +181,7 @@ Wklejone maile/teksty człowieka. To jest kanon - z tego uczymy się stylu.
 - Podpis: <jak podpisuje>
 - Czego NIE robi: <czego w jego mailach nie ma - np. nie tłumaczy się, nie sprzedaje w pierwszej wiadomości>
 
-## Reguły z pętli uczenia (rośnie w czasie)
-Dopisywane przez cold-mail, gdy człowiek poprawia maile i potwierdza, że to reguła na przyszłość.
+## Reguły z pętli uczenia
+Rośnie w czasie. Dopisywane przez cold-mail, gdy człowiek poprawia maile i potwierdza, że to reguła na przyszłość.
 - (na razie pusto - zapełni się przy pisaniu)
 ```

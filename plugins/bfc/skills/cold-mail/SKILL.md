@@ -21,7 +21,7 @@ Cold mail bez materiału o firmie to spam. Nie da się go uratować dobrym style
 
 Najlepszym materiałem jest **notatka z researchu** - ma już policzony dominujący problem i gotowy haczyk.
 
-1. **Znajdź notatkę researchu.** Użyj narzędzia **Grep** (`-i -l` po nazwie firmy w `<sejf>`), nie shellowego `grep` (nie ma go na Windows). Trafienie z `skill: bfc/research` we frontmatterze -> to jest złoto, czytaj je w całości.
+1. **Znajdź notatkę researchu.** Użyj narzędzia **Grep** (`-i -l` po nazwie firmy w `<sejf>`), nie shellowego `grep` (nie ma go na Windows). Trafienie z `skill: bfc/research` we frontmatterze -> to jest złoto, czytaj je w całości. Upewnij się, że notatka jest **o tej firmie** (nazwa pliku/nagłówek), a nie tylko ją wspomina; tabela zbiorcza `Prospekty ...` to lista wielu firm, nie notatka jednej.
 2. **Nie ma notatki** -> zapytaj, czy zrobić research teraz (`/bfc:research` na tę jedną firmę). To zajmie chwilę, a różnica w odpowiedziach jest ogromna. Człowiek nie chce czekać -> zrób minimum: wejdź na stronę firmy i znajdź **jedną** konkretną, sprawdzalną rzecz, o której da się napisać.
 3. **Absolutnie nic nie da się znaleźć** -> powiedz wprost, że to będzie wiadomość ogólna i takie mają dużo słabszą odpowiedź. Napisz ją, ale krótszą i bardziej pytającą.
 
@@ -69,7 +69,7 @@ Kluczowe: **każdy follow-up wnosi coś nowego.** „Chciałem się przypomnieć
 ## Krok 5 - sprawdź przed oddaniem
 
 1. Czy pierwsze zdanie jest o odbiorcy?
-2. Czy każdy fakt o firmie da się sprawdzić w `Dowody-sygnały` notatki?
+2. Czy każdy fakt o firmie da się sprawdzić - w `Dowody-sygnały` notatki, a jak notatki nie było (Krok 1 pkt 2/3), w tym, co sam znalazłeś na stronie?
 3. Czy jest **jedna** propozycja, nie trzy?
 4. Czy wezwanie do działania da się wykonać w 30 sekund?
 5. Czy mieści się na ekranie telefonu?
@@ -92,7 +92,7 @@ Pełna mechanika (co jest regułą, co nie, jak destylować, gdzie dopisać): `b
 
 1. Poprawił maila (styl, forma, otwarcie, słowo, długość) -> **nanieś poprawkę od razu** na tę wiadomość.
 2. Zapytaj **raz** (nie po każdej zmianie z osobna): „To jednorazowo, czy reguła na przyszłość?" (`AskUserQuestion`: „Reguła - stosuj zawsze" / „Tylko ten raz"). Kilka poprawek naraz -> pokaż je jako krótką listę destylowanych reguł i zapytaj zbiorczo, które zapisać.
-3. „Reguła" -> zdestyluj poprawkę w jedno konkretne zdanie-regułę i **dopisz** do sekcji `## Reguły z pętli uczenia` w `Głos.md` (czytaj plik, dopisz na końcu sekcji - nie przepisuj całości). Potwierdź jedną linią, co doszło.
+3. „Reguła" -> zdestyluj poprawkę w jedno konkretne zdanie-regułę i **dopisz** do sekcji zaczynającej się od `## Reguły z pętli uczenia` w `Głos.md` (czytaj plik, dopisz na końcu sekcji - nie przepisuj całości). Reguła sprzeczna z już zapisaną -> podmień starą, nie dokładaj drugiej (`blueprints/glos-w-mailu.md`). Potwierdź jedną linią, co doszło.
 4. Poprawka o **fakcie o firmie** (a nie o stylu) -> to nie jest reguła głosu. Popraw notatkę/dane, nie zaśmiecaj `Głos.md`.
 
 To jest różnica między skillem a ChatGPT: on zapomina po zamknięciu okna, ten pamięta i pisze coraz bardziej jak Ty.

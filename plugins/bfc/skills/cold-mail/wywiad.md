@@ -19,8 +19,8 @@ Nie pytaj o styl ani głos - to jest w `Głos.md`. Ten wywiad ustala tylko ustaw
 ### jedna_oferta | tekst | 1
 **Pytanie:** Z czym zaczepiasz w pierwszej wiadomości? Jedna rzecz, nie lista.
 **Po co:** W pierwszym kontakcie proponujesz jedną rzecz. Trzy propozycje wymagają od odbiorcy decyzji, a on w skrzynce decyzji nie podejmuje.
-**Wnioskuj z:** `uslugi` w `Config.md` skilla oferta oraz `co_sprzedajesz` w `Profil.md`. Jeśli tam jest kilka usług, zapytaj, która najlepiej otwiera rozmowę, i podaj je jako opcje.
-**Domyślnie:** TODO
+**Wnioskuj z:** sekcje `## Co sprzedaję` i `## Problem, który rozwiązuję -> usługa` w `Oferta.md` (fundament z /bfc:start) - to źródło główne. Brak -> `uslugi` w `Config.md` skilla oferta albo `co_sprzedajesz` w `Profil.md`. Jeśli jest kilka usług, zapytaj, która najlepiej otwiera rozmowę, i podaj je jako opcje.
+**Domyślnie:** TODO: (uzupełnij, z czym zaczepiasz w pierwszej wiadomości)
 **Walidacja:** Jedna usługa albo jeden konkretny problem do rozwiązania. Wpisano kilka - dopytaj raz, która otwiera najlepiej.
 
 ### cta | wybor | 1
