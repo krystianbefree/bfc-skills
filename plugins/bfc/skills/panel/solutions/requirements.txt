@@ -1,0 +1,10 @@
+# Panel dowodzenia freelancera - zależności silnika.
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+pydantic==2.10.4
+python-dotenv==1.0.1
+loguru==0.7.3
+requests==2.32.3
+PyYAML>=6.0
+# Tryb kasy „stripe" (opcjonalny) - reszta panelu działa bez klucza.
+stripe==11.4.1

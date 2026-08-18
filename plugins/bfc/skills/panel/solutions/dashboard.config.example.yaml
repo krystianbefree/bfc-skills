@@ -1,0 +1,146 @@
+# Konfiguracja panelu dowodzenia freelancera.
+# To jedyny plik, który zmieniasz budując panel pod siebie. Kod adapterów czyta
+# stąd nazwy etapów, progi sygnałów i ścieżki do plików w sejfie.
+#
+# Wskaż go przez DASHBOARD_CONFIG, np.:
+#   DASHBOARD_CONFIG=/sciezka/dashboard.config.yaml bash panel.sh
+
+# Bazowa ścieżka sejfu Obsidiana. Adaptery czytające pliki MD (lejek, klienci,
+# biznes) rozwiązują ścieżki względem tego katalogu.
+sejf: "/absolutna/sciezka/do/sejfu"
+
+owner:
+  name: "Imię"
+  handle: "nick"
+
+# ── LEJEK (etapy pozyskiwania) ──────────────────────────────────────────────
+# Nagłówki `##` w Pozyskiwanie.md muszą odpowiadać etykietom tych etapów.
+# Wartość lejka sumuje pozycje z etapów zawierających „rozmow"/„ofert".
+pipeline:
+  unit: "prospekt"
+  unit_plural: "prospekty"
+  stages:
+    - id: prospekt
+      label: "Prospekt"
+      hint: "namierzony, brak kontaktu"
+    - id: kontakt
+      label: "Kontakt"
+      hint: "odezwałem się, czekam"
+    - id: rozmowa
+      label: "Rozmowa"
+      hint: "gadamy o współpracy"
+    - id: oferta
+      label: "Oferta"
+      hint: "oferta wysłana, decyzja"
+
+# ── SYGNAŁY ─────────────────────────────────────────────────────────────────
+signals:
+  dni_bez_ruchu_lejek: 14      # lead bez ruchu dłużej -> info
+  dni_bez_kontaktu: 21         # klient bez kontaktu dłużej -> warn
+
+# ── ŹRÓDŁA ──────────────────────────────────────────────────────────────────
+# enabled: false wyłącza blok w UI zamiast pokazywać pustą kartę.
+# ttl_minutes: 0 = czytaj zawsze na świeżo (pliki lokalne).
+sources:
+  pozyskiwanie:
+    enabled: true
+    ttl_minutes: 0
+    file: "Pozyskiwanie.md"
+    # DOLEWANIE do lejka ze skilli klubowych (opcjonalne). Brak folderu -> pomijane.
+    import_research_dir: "BFC Skille/research"   # tabele „Prospekty *.md" + notatki per firma -> Prospekt
+    import_coldmail_dir: "BFC Skille/cold-mail"  # jeden plik = firma z wysłanym cold mailem -> Kontakt
+    followup_dni: 3            # follow-up ustawiany przy imporcie cold-maila: dziś + tyle dni
+  klienci:
+    enabled: true
+    ttl_minutes: 0
+    dir: "Klienci"
+  biznes:
+    enabled: true
+    ttl_minutes: 0
+    dir: "Biznes"
+  kasa:
+    enabled: true
+    ttl_minutes: 0
+    zrodlo: "reczne"           # reczne | faktury | stripe | nie_licze
+    window_days: 30
+    # Tryb „faktury": realna gotówka z pliku ledgera w sejfie (format: pliki-sejfu.md).
+    ledger_file: "Kasa.md"
+    # Tryb „stripe": wiele kont; klucz NIGDY tutaj, tylko nazwa zmiennej z .env.
+    # ttl_minutes wyżej niż 0 (np. 60), żeby nie bić API przy każdym odświeżeniu.
+    accounts:
+      - key_env: "STRIPE_API_KEY"
+        label: "Be Free Club"
+      # - key_env: "STRIPE_API_KEY_PREMIERE"
+      #   label: "Akademia BeFree"
+  toolkit:
+    enabled: true
+    ttl_minutes: 0
+  # Archiwum gotowych efektów skończonych zadań (Outputy/). Claude zapisuje tu
+  # cenniki, oferty, scenariusze przy zamykaniu zadań (blueprints/zadania-lifecycle.md).
+  outputy:
+    enabled: true
+    ttl_minutes: 0
+    dir: "Outputy"
+  # Timer roboczy (pomodoro/stoper). Stan po stronie serwera, nie w sejfie.
+  timer:
+    enabled: true
+    ttl_minutes: 0
+  # Stan integracji na żywo: konektory claude.ai + serwery MCP + klucze API.
+  # `probes` to nazwy kluczy z .env do sprawdzenia (sama obecność, wartość nie wychodzi).
+  connectors:
+    enabled: true
+    ttl_minutes: 5
+    # Klucze .env do sprawdzenia. Domyślnie sam Stripe (Kasa) - większość
+    # klubowiczów używa Claude Code na subskrypcji, bez klucza API, więc nie
+    # świecimy „brak ANTHROPIC_API_KEY". Dorzuć swoje, gdy je masz.
+    # Konektory claude.ai (Gmail, Kalendarz...) i serwery MCP pokazują się bez tego.
+    probes: [stripe]
+  # Treści do nagrania (pipeline pomysł -> publikacja). Włącz tylko przy
+  # publikuje_tresci = regularnie - inaczej zostaw wyłączone.
+  tresci:
+    enabled: false
+    ttl_minutes: 0
+    file: "Do nagrania.md"
+  # Zasięgi/statystyki treści. Dla publikujących. Włączane razem z tresci
+  # (publikuje_tresci = regularnie). Liczby z pliku Zasięgi.md (ręcznie albo
+  # Claude dopisuje z rozmowy). Instagram na żywo - tryb do dołożenia.
+  statystyki:
+    enabled: false
+    ttl_minutes: 0
+    file: "Zasięgi.md"
+    window_days: 30
+
+# ── TIMER ───────────────────────────────────────────────────────────────────
+# Ustawienia zakładki Czas. Człowiek i tak może zmienić długość w panelu.
+timer:
+  default_mode: pomodoro        # pomodoro | stoper
+  pomodoro_minutes: 25
+  break_minutes: 5
+  long_break_minutes: 15
+  sessions_before_long_break: 4
+
+# ── CZAT ────────────────────────────────────────────────────────────────────
+# Rozmowa z Claude Code w zakładce Czat. Domyślnie wyłączona w tym przykładzie.
+chat:
+  enabled: false
+  permission_mode: acceptEdits
+  allowed_tools: [Bash, Read, Glob, Grep, Edit, Write, TodoWrite, WebSearch, WebFetch]
+  disallowed_tools: []
+  use_api_key: false
+  system_prompt: >-
+    Odpowiadaj po polsku, na „Ty", krótko i konkretnie. Piszesz do właściciela
+    panelu operacyjnego jego freelance-biznesu.
+
+# ── TERMINAL ────────────────────────────────────────────────────────────────
+terminal:
+  enabled: false
+  allow_missing_origin: true
+  allowed_origins: []
+
+# ── POWIADOMIENIA PUSH (macOS) ──────────────────────────────────────────────
+# Zadanie w tle co `interval_minutes` przelicza sygnały i dla każdego nowego
+# alarmu (deadline po terminie itp.) odpala natywne powiadomienie macOS.
+# Dedup po id sygnału. Nie-macOS -> no-op. Domyślnie wyłączone.
+notifications:
+  enabled: false
+  interval_minutes: 30

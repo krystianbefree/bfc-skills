@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "bfc",
+  "displayName": "Be Free Club - skille",
+  "version": "1.1.0",
+  "description": "Skille dla freelancerow z Be Free Club: panel operacyjny, research firm, oferty, cold maile. Personalizowane przez wywiad przy pierwszym uzyciu.",
+  "author": {
+    "name": "Krystian",
+    "url": "https://befreeclub.pl"
+  },
+  "homepage": "https://github.com/krystianbefree/bfc-skills",
+  "repository": "https://github.com/krystianbefree/bfc-skills",
+  "license": "MIT",
+  "keywords": ["freelance", "sprzedaz", "panel", "dashboard", "research", "oferta", "cold-mail"]
+}

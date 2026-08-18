@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json.schemastore.org/claude-code-plugin-manifest.json",
+  "name": "bfc-admin",
+  "displayName": "Be Free Club - administracja",
+  "version": "1.0.0",
+  "description": "Narzedzia opiekuna biblioteki BFC: tworzenie nowych skilli w standardzie (SKILL.md + wywiad + config + blueprints) i publikacja do marketplace.",
+  "author": {
+    "name": "Krystian",
+    "url": "https://befreeclub.pl"
+  },
+  "homepage": "https://github.com/krystianbefree/bfc-skills",
+  "repository": "https://github.com/krystianbefree/bfc-skills",
+  "license": "MIT"
+}

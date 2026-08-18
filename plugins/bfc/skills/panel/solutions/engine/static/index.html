@@ -1,0 +1,287 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel dowodzenia</title>
+<link rel="stylesheet" href="/static/vendor/xterm.css">
+<link rel="stylesheet" href="/static/style.css?v=13">
+</head>
+<body>
+
+<header class="topbar">
+  <div class="topbar-main">
+    <div class="eyebrow">Panel operacyjny freelancera <span class="eyebrow-by">by Be Free Club</span></div>
+    <h1 class="wordmark">Dowodzenie</h1>
+    <div class="topbar-meta">
+      <span id="owner-name">—</span>
+      <span class="dot">·</span>
+      <span id="generated-at">wczytuję…</span>
+    </div>
+  </div>
+  <div class="topbar-widgets" id="topbar-widgets"></div>
+  <div class="topbar-actions">
+    <button class="btn btn-ghost" id="btn-refresh" title="Przeładuj dane">Odśwież</button>
+    <button class="btn btn-ghost" id="btn-force" title="Pomiń cache zewnętrznych API">Odśwież z API</button>
+  </div>
+</header>
+
+<div class="healthstrip">
+  <button class="health-summary" id="health-summary" aria-expanded="false">
+    <span class="health-dot" id="health-dot"></span>
+    <span id="health-text">sprawdzam źródła…</span>
+    <span class="health-caret">rozwiń</span>
+  </button>
+  <div class="health-detail" id="health-detail" hidden></div>
+</div>
+
+<nav class="tabs" id="tabs">
+  <button class="tab" data-tab="samouczek">Samouczek</button>
+  <button class="tab is-active" data-tab="dzis">Dziś</button>
+  <button class="tab" data-tab="pozyskiwanie">Prospecting</button>
+  <button class="tab" data-tab="klienci">Klienci <span class="tab-badge" id="badge-klienci"></span></button>
+  <button class="tab" data-tab="biznes">Biznes</button>
+  <button class="tab" data-tab="todo">To-do <span class="tab-badge" id="badge-todo"></span></button>
+  <button class="tab" data-tab="kasa">Kasa</button>
+  <button class="tab" data-tab="content">Content <span class="tab-badge" id="badge-content"></span></button>
+  <button class="tab" data-tab="zasiegi">Zasięgi</button>
+  <button class="tab" data-tab="archiwum">Archiwum <span class="tab-badge" id="badge-archiwum"></span></button>
+  <button class="tab" data-tab="toolkit">Toolkit</button>
+  <button class="tab" data-tab="kalendarz">Kalendarz</button>
+  <button class="tab" data-tab="czas">Czas</button>
+  <button class="tab" data-tab="connectors">Połączenia <span class="tab-badge" id="badge-connectors"></span></button>
+  <button class="tab" data-tab="czat">Czat <span class="tab-badge" id="badge-czat"></span></button>
+  <button class="tab" data-tab="terminal">Terminal <span class="tab-badge" id="badge-terminal"></span></button>
+</nav>
+
+<main id="main">
+
+  <!-- ── DZIŚ ─────────────────────────────────────────────────────────── -->
+  <section class="panel is-active" id="panel-dzis">
+    <div class="grid-2">
+      <div>
+        <h2 class="section-title">Dziś</h2>
+        <div id="today-list" class="stack"></div>
+      </div>
+      <div>
+        <h2 class="section-title">Sygnały</h2>
+        <div id="signal-list" class="stack"></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Kalendarz</h2>
+    <div class="cal-widget">
+      <div id="dzis-cal"></div>
+      <div id="dzis-cal-day" class="stack cal-daylist"></div>
+    </div>
+
+    <h2 class="section-title">Liczby</h2>
+    <div class="tiles" id="kpi-tiles"></div>
+
+    <h2 class="section-title">Lejek</h2>
+    <div class="stagebar" id="stagebar"></div>
+  </section>
+
+  <!-- ── POZYSKIWANIE ─────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-pozyskiwanie">
+    <div class="toolbar">
+      <span class="muted" id="funnel-summary"></span>
+    </div>
+    <div class="kanban" id="kanban"></div>
+  </section>
+
+  <!-- ── KLIENCI ──────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-klienci">
+    <div class="toolbar">
+      <span class="muted" id="klienci-summary"></span>
+    </div>
+    <div id="klienci-list" class="grid-cards"></div>
+  </section>
+
+  <!-- ── BIZNES ───────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-biznes">
+    <p class="muted lead">Praca nad Twoją firmą, nie dla klienta: oferta, strona, systemy, marketing.</p>
+    <div id="biznes-list" class="grid-cards"></div>
+  </section>
+
+  <!-- ── TO-DO ────────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-todo">
+    <p class="muted lead">Wszystkie otwarte zadania od klientów i z Twojego biznesu w jednym miejscu. Odhaczasz - zapisuje się w sejfie.</p>
+    <div id="todo-list" class="stack"></div>
+  </section>
+
+  <!-- ── KASA ─────────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-kasa">
+    <div class="kasa-hero">
+      <div id="kasa-big"></div>
+      <div class="card">
+        <h2 class="section-title">Przychód per klient</h2>
+        <div class="bars" id="kasa-perclient"></div>
+      </div>
+    </div>
+    <div class="grid-2">
+      <div>
+        <h2 class="section-title">Ostatnie wpłaty</h2>
+        <div id="kasa-txns" class="stack"></div>
+      </div>
+      <div>
+        <h2 class="section-title">Oczekujące / zaległe</h2>
+        <div id="kasa-pending" class="stack"></div>
+      </div>
+    </div>
+    <p class="muted lead" id="kasa-note"></p>
+  </section>
+
+  <!-- ── SAMOUCZEK ────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-samouczek">
+    <p class="muted lead">Co która zakładka robi i czego potrzebuje, żeby zaczęła żyć. <span class="s-ok">●</span> działa &nbsp; <span class="s-wait">●</span> włączone, czeka na Ciebie &nbsp; <span class="s-off">●</span> wyłączone (włącz, jeśli chcesz).</p>
+    <div id="samouczek-list" class="stack"></div>
+  </section>
+
+  <!-- ── CONTENT / DO NAGRANIA ────────────────────────────────────────── -->
+  <section class="panel" id="panel-content">
+    <p class="muted lead">Pomysły i materiały do nagrania w jednym miejscu, żeby nic nie zginęło. Od pomysłu do publikacji.</p>
+    <div class="kanban" id="content-kanban"></div>
+  </section>
+
+  <!-- ── ZASIĘGI / STATYSTYKI ─────────────────────────────────────────── -->
+  <section class="panel" id="panel-zasiegi">
+    <p class="muted lead">Zasięgi Twoich treści - dla tych, którzy publikują. Wpisujesz liczby w <code>Zasięgi.md</code> albo mówisz je Claude, a on dopisuje.</p>
+    <div class="tiles" id="zasiegi-tiles"></div>
+    <h2 class="section-title">Zasięg kolejnych postów</h2>
+    <div id="zasiegi-chart" class="reachbars"></div>
+    <h2 class="section-title">Najlepsze posty</h2>
+    <div id="zasiegi-top" class="stack"></div>
+  </section>
+
+  <!-- ── ARCHIWUM OUTPUTÓW ────────────────────────────────────────────── -->
+  <section class="panel" id="panel-archiwum">
+    <p class="muted lead">Gotowe efekty skończonych zadań - cenniki, oferty, scenariusze, teksty. Claude zapisuje je tu z rozmowy, gdy zamykacie zadanie. Kliknij, żeby podejrzeć i skopiować.</p>
+    <div id="archiwum-list" class="stack"></div>
+  </section>
+
+  <!-- ── TOOLKIT ──────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-toolkit">
+    <h2 class="section-title">Komendy i skille</h2>
+    <p class="muted lead">Czym dysponuje Claude Code pod ręką. Kliknij, żeby skopiować wywołanie.</p>
+    <div id="toolkit-list" class="grid-cards"></div>
+
+    <h2 class="section-title">Stan źródeł</h2>
+    <div id="health-table" class="stack"></div>
+  </section>
+
+  <!-- ── KALENDARZ ────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-kalendarz">
+    <div class="cal-wrap">
+      <div id="kal-grid"></div>
+      <div>
+        <h2 class="section-title">Wybrany dzień</h2>
+        <div id="kal-day" class="stack"></div>
+        <h2 class="section-title">Nadchodzące</h2>
+        <div id="kal-upcoming" class="stack"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── POŁĄCZENIA ───────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-connectors">
+    <p class="muted lead">Wszystko, przez co Claude i pipeline sięgają na zewnątrz. Konektory claude.ai i serwery MCP czytamy z konfiguracji, klucze API sprawdzamy na żywo lekkim zapytaniem. Wartości kluczy nie opuszczają serwera.</p>
+
+    <h2 class="section-title">Konektory claude.ai <span class="conn-count" id="count-claudeai"></span></h2>
+    <div id="conn-claudeai" class="stack"></div>
+
+    <h2 class="section-title">Serwery MCP <span class="conn-count" id="count-mcp"></span></h2>
+    <div id="conn-mcp" class="stack"></div>
+
+    <h2 class="section-title">Klucze API <span class="conn-count" id="count-api"></span></h2>
+    <div id="conn-api" class="stack"></div>
+  </section>
+
+  <!-- ── CZAS ─────────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-czas">
+    <div class="clock-wrap">
+      <div class="clock" id="clock"></div>
+      <div class="clock-side">
+        <div class="clock-task" id="clock-task"></div>
+        <div class="clock-controls" id="clock-controls"></div>
+        <div class="clock-stats" id="clock-stats"></div>
+      </div>
+    </div>
+
+    <div class="grid-2">
+      <div>
+        <h2 class="section-title">Nad czym pracujesz</h2>
+        <div id="clock-picker" class="stack"></div>
+      </div>
+      <div>
+        <h2 class="section-title">Gdzie poszedł czas</h2>
+        <div id="clock-summary" class="stack"></div>
+      </div>
+    </div>
+
+    <h2 class="section-title">Dziś</h2>
+    <div id="clock-journal" class="stack"></div>
+  </section>
+
+  <!-- ── CZAT ─────────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-czat">
+    <div class="chat-bar">
+      <span class="term-state" id="chat-state">rozłączony</span>
+      <span class="chat-scope" id="chat-scope"></span>
+      <span class="term-spacer"></span>
+      <span class="muted" id="chat-cost"></span>
+      <button class="btn" id="chat-reset" title="Zacznij rozmowę od zera">Nowa rozmowa</button>
+    </div>
+
+    <div class="chat-log" id="chat-log">
+      <div class="chat-empty" id="chat-empty">
+        <p class="chat-empty-title">Powiedz, co mam zrobić.</p>
+        <p>Mam dostęp do plików projektu i sejfu Obsidiana. Rozmowa pamięta kontekst, więc możesz dopytywać. Zmiany w rozmowie dopisują się do plików - panel odświeży się sam.</p>
+        <div class="chat-suggest" id="chat-suggest"></div>
+      </div>
+    </div>
+
+    <form class="chat-input" id="chat-form">
+      <textarea id="chat-text" rows="1" placeholder="Napisz wiadomość…  (Enter wysyła, Shift+Enter nowa linia)" autocomplete="off"></textarea>
+      <button type="submit" class="btn btn-primary" id="chat-send">Wyślij</button>
+    </form>
+  </section>
+
+  <!-- ── TERMINAL ─────────────────────────────────────────────────────── -->
+  <section class="panel" id="panel-terminal">
+    <div class="term-bar">
+      <span class="term-state" id="term-state">rozłączony</span>
+      <span class="muted" id="term-cmd"></span>
+      <span class="term-spacer"></span>
+      <button class="btn" id="term-connect">Połącz</button>
+      <button class="btn" id="term-restart" title="Ubij sesję i odpal od nowa">Restart</button>
+    </div>
+    <div class="term-host" id="term-host"></div>
+    <p class="muted lead term-hint">
+      Pełna sesja Claude Code w katalogu projektu. Pytania o uprawnienia pojawiają się normalnie,
+      więc nic nie wykona się bez Twojej zgody. Sesja żyje tak długo, jak ta zakładka jest otwarta.
+    </p>
+  </section>
+
+</main>
+
+<div class="overlay" id="overlay" hidden>
+  <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title">
+    <div class="sheet-head">
+      <div class="eyebrow" id="sheet-kind"></div>
+      <h2 class="sheet-title" id="sheet-title"></h2>
+      <div class="sheet-meta" id="sheet-meta"></div>
+      <button class="sheet-close" id="sheet-close" title="Zamknij (Esc)">✕</button>
+    </div>
+    <div class="sheet-move" id="sheet-move"></div>
+    <div class="sheet-body" id="sheet-body"></div>
+  </div>
+</div>
+
+<div class="toast" id="toast" hidden></div>
+
+<script src="/static/vendor/xterm.js"></script>
+<script src="/static/vendor/addon-fit.js"></script>
+<script src="/static/app.js?v=13"></script>
+</body>
+</html>

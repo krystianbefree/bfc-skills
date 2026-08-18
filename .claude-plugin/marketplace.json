@@ -1,0 +1,27 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "befreeclub",
+  "description": "Biblioteka skilli Be Free Club dla Claude Code. Kazdy skill najpierw przeprowadza wywiad i zapisuje Twoje dane w Twoim sejfie Obsidian, potem dziala juz pod Ciebie.",
+  "owner": {
+    "name": "Krystian",
+    "url": "https://befreeclub.pl"
+  },
+  "plugins": [
+    {
+      "name": "bfc",
+      "displayName": "Be Free Club - skille",
+      "source": "./plugins/bfc",
+      "description": "Research firm, oferty i cold maile. Przy pierwszym uruchomieniu kazdy skill pyta o Twoje dane (branza, zrodla, pricing, ton) i zapisuje je w Twoim sejfie Obsidian.",
+      "category": "Productivity",
+      "tags": ["freelance", "sprzedaz", "research", "oferta", "cold-mail", "polski"]
+    },
+    {
+      "name": "bfc-admin",
+      "displayName": "Be Free Club - administracja",
+      "source": "./plugins/bfc-admin",
+      "description": "Tylko dla opiekuna biblioteki. Tworzy nowe skille w standardzie BFC i publikuje je do marketplace. Klubowicze tego nie instaluja.",
+      "category": "Productivity",
+      "tags": ["admin"]
+    }
+  ]
+}
