@@ -26,6 +26,8 @@ PLACEHOLDERY = ("<", "{{", "*", "$(")
 PLIKI_RUNTIME = {
     "Profil.md", "Config.md", "SKILL.md", "sejf.txt",
     "Pozyskiwanie.md", "Kasa.md", "Do nagrania.md", "Zasięgi.md",
+    # Notatki-fundamenty tworzone przez /bfc:start w sejfie uzytkownika.
+    "Oferta.md", "Grupa docelowa.md", "Metoda prospectingu.md", "Dowody.md", "Głos.md",
 }
 
 KOD_INLINE = re.compile(r"`[^`]*`")

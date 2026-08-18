@@ -1,10 +1,29 @@
 # Źródła firm
 
-Katalog miejsc, z których bierzemy prospektów. Czytaj tylko sekcje odpowiadające źródłom
-zaznaczonym w `Config.md`.
+Katalog miejsc, z których bierzemy prospektów. **Które źródła i gdzie szukać opinii - z fundamentu:**
+`Grupa docelowa.md` (pole `SEGMENT` + „gdzie szukać opinii per segment"). Segment steruje doborem, nie Config.
 
 Przed użyciem sprawdź stan świata: te serwisy zmieniają się z miesiąca na miesiąc.
 Coś nie działa jak opisano -> zanotuj to w wyniku i weź kolejne źródło, nie kombinuj w kółko.
+Masz Firecrawl -> `firecrawl-search`/`firecrawl-scrape` (radzi sobie ze stronami JS i listingami).
+Bez niego -> `WebSearch`/`WebFetch`.
+
+## Dobór źródeł wg segmentu (z `Grupa docelowa.md`)
+
+Segment mówi, gdzie są firmy i gdzie ich klienci zostawiają opinie. Domyślne (do potwierdzenia w wywiadzie):
+
+| Segment | Gdzie szukać firm | Gdzie opinie klientów |
+|---|---|---|
+| lokalna usługa | Google Maps, katalogi (panoramafirm.pl) | Google Maps, gowork.pl |
+| beauty / uroda | booksy.com, Google Maps | booksy.com, Google Maps |
+| medycyna / gabinety | znanylekarz.pl, Google Maps | znanylekarz.pl |
+| e-commerce | katalogi kategorii, Allegro, Ceneo | opineo.pl, ceneo.pl, Allegro, Empik (wg kategorii) |
+| restauracje / gastronomia | Google Maps | Google Maps, gowork.pl |
+| B2B / produkcja | aleo.com, panoramafirm.pl, LinkedIn | LinkedIn, aleo.com |
+| doradztwo / usługi B2B | LinkedIn | LinkedIn |
+
+Człowiek wskazał w `Grupa docelowa.md` inne źródło opinii dla swojej niszy -> użyj jego, nie domyślnego.
+Serwis z listy blokuje automat (patrz niżej) -> `WebSearch` albo `[do ręki]`.
 
 ## Które strony blokują automat
 

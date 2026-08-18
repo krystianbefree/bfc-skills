@@ -45,6 +45,14 @@ Czego nie robimy:
 - Nie odmawiamy roboty z powodu braku klucza.
 - Nie proponujemy płatnych narzędzi w kółko. Jedno zdanie, raz na sesję, koniec.
 
+## Uruchamianie skryptów Pythona (cross-platform)
+
+Komenda `python3` **nie istnieje na Windows** - instalator z python.org tworzy `python` i `py`.
+Skrypty `.py` z paczki (`wykryj-sejf.py`, `wykryj-narzedzia.py`, `score.py`, `apify_ig.py`) uruchamiaj
+**łańcuchem fallbacku**: spróbuj `python3`, potem `python`, potem `py -3` - pierwszy, który odpowie
+na `--version`, jest tym właściwym. Skrypty adresuj **pełną ścieżką** (`${CLAUDE_PLUGIN_ROOT}/...`
+albo `<sejf>/...`), nie względną - bo uruchamiają się z katalogu, w którym akurat jest człowiek.
+
 ## Pliki `.env`
 
 Jeśli szukasz kluczy w `.env`, czytaj tylko te zmienne, których faktycznie potrzebujesz.

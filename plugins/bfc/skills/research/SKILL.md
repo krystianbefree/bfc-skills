@@ -1,101 +1,73 @@
 ---
 name: research
-description: Znajduje firmy pasujące do Twojego profilu klienta i robi z nich notatki w sejfie Obsidian - kontakt, sygnały budżetu, widoczne problemy, kto decyduje. Przy pierwszym użyciu pyta o Twoją branżę, źródła i to, jakie dane Cię interesują. Użyj gdy ktoś mówi "znajdź mi klientów", "research firm", "zrób listę prospektów", "poszukaj firm z branży X", "kogo mogę zaczepić", "lead gen", "sprawdź tę firmę przed rozmową".
-allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, AskUserQuestion, TodoWrite, Skill
+description: Znajduje firmy pasujące do Twojego profilu klienta, AUDYTUJE każdą przez soczewkę Twojej usługi (strona, social, reklamy, opinie) i liczy score dopasowania 1-100 z dominującym problemem i gotowym haczykiem na pierwsze zdanie maila. Czyta fundament z /bfc:start, nie pyta od zera. Użyj gdy ktoś mówi "znajdź mi klientów", "research firm", "zrób listę prospektów", "poszukaj firm z branży X", "kogo mogę zaczepić", "lead gen", "sprawdź tę firmę przed rozmową", "zaudytuj tę firmę".
+allowed-tools: Bash, Read, Write, Edit, Glob, Grep, WebSearch, WebFetch, AskUserQuestion, TodoWrite, Skill, mcp__playwright__browser_navigate, mcp__playwright__browser_evaluate, mcp__playwright__browser_take_screenshot, mcp__chrome-devtools__lighthouse_audit, mcp__chrome-devtools__navigate_page
 ---
 
 # Research firm
 
-Znajdujesz firmy, sprawdzasz je i zostawiasz w sejfie notatki, z których da się od razu napisać
-maila albo wejść na rozmowę. Nie robisz raportu dla samego raportu.
+Znajdujesz firmy, audytujesz każdą pod kątem tego, co **Ty** sprzedajesz, i zostawiasz w sejfie notatkę ze score i gotowym haczykiem - taką, z której cold-mail od razu napisze pierwsze zdanie. Nie robisz raportu dla samego raportu.
 
-## Krok 0 - konfiguracja
+## Krok 0 - fundament i narzędzia
 
 1. Przeczytaj `${CLAUDE_PLUGIN_ROOT}/wspolne/sejf.md`, ustal `<sejf>`.
-2. Brak `<sejf>/BFC Skille/Profil.md` -> przeprowadź wywiad profilowy
-   (`${CLAUDE_PLUGIN_ROOT}/wspolne/profil.wywiad.md`), zapisz, wróć tutaj.
-3. Przeczytaj `Profil.md`.
-4. Brak `<sejf>/BFC Skille/research/Config.md` albo są w nim pola `TODO:` -> przeprowadź wywiad
-   z `wywiad.md` (mechanika: `${CLAUDE_PLUGIN_ROOT}/wspolne/onboarding.md`), zapisz z
-   `config.template.md`. Przy istniejącym pliku pytaj **tylko** o `TODO:`.
-5. Wykryj narzędzia: `bash "${CLAUDE_PLUGIN_ROOT}/wspolne/wykryj-narzedzia.sh"`.
-   Zasady użycia: `${CLAUDE_PLUGIN_ROOT}/wspolne/narzedzia.md`.
+2. Sprawdź fundament w `<sejf>/BFC Skille/`: `Oferta.md`, `Grupa docelowa.md`, `Metoda prospectingu.md`. **Brak któregoś -> „Najpierw odpal `/bfc:start`, żeby zbudować fundament (kogo szukasz, co sprzedajesz, jak oceniasz firmę). Bez tego research znajdzie same nazwy."** Nie rób tu własnego wywiadu - fundament jest źródłem prawdy.
+3. Wykryj narzędzia (cross-platform, uruchom łańcuchem `python3` -> `python` -> `py -3`): `python3 "${CLAUDE_PLUGIN_ROOT}/wspolne/wykryj-narzedzia.py"`. Zasady i degradacja: `${CLAUDE_PLUGIN_ROOT}/wspolne/narzedzia.md`. Zakładamy, że masz Firecrawl/Apify/Playwright; jak nie, audyt degraduje uczciwie (patrz `blueprints/audyt.md`).
 
-Nie zapowiadaj kroku 0. Człowiek ma zobaczyć pytania, a potem wynik.
+## Krok 0.5 - kompilacja taksonomii (raz, cache'owane)
 
-## Krok 1 - ustal zakres tego przebiegu
+Score musi być deterministyczny, więc nie czyta prozy. Skompiluj fundament w strukturę wg `blueprints/taksonomia.md`:
 
-Config mówi, jakich firm szukasz **ogólnie**. Ten przebieg może być węższy.
+- `Oferta.md` (problem -> usługa -> sygnał) + `Metoda prospectingu.md` -> `<sejf>/BFC Skille/research/Taksonomia.json`.
+- `Grupa docelowa.md` -> `<sejf>/BFC Skille/research/icp.json`.
 
-- Człowiek podał konkretną firmę ("sprawdź mi X") -> pomiń krok 2, leć od razu do kroku 3
-  na tej jednej firmie.
-- Człowiek podał segment ("dentyści w Poznaniu") -> użyj go zamiast domyślnego z configu.
-- Człowiek nie podał nic -> weź domyślny profil z configu i **powiedz jednym zdaniem**,
-  czego szukasz, zanim zaczniesz. Ktoś może chcieć to zawęzić.
+Kompiluj na starcie przebiegu. Jest już `Taksonomia.json` i fundament się nie zmienił -> użyj go ponownie; w razie wątpliwości skompiluj od nowa (to tanie: 2 pliki wczytać, 2 zapisać). Nie polegaj na porównaniu `mtime` przez powłokę - nieprzenośne na Windows. Po kompilacji powiedz jednym zdaniem, co wyszło („z Twojej oferty 3 klasy problemów, segment lokalna").
 
-Ustal liczbę firm. Domyślnie z configu. Powyżej 20 firm w jednym przebiegu ostrzeż,
-że to potrwa, i zaproponuj podział na tury.
+## Krok 1 - zakres przebiegu
+
+- Konkretna firma („sprawdź mi X") -> pomiń discovery, leć od razu do Kroku 3. **Najpierw ustal jej segment, branżę, miasto i wielkość** (zapytaj albo wywnioskuj ze strony) - bez tego bramka segmentu i dopasowanie ICP nie policzą się poprawnie.
+- Segment („dentyści w Poznaniu") -> nadpisuje domyślny z `Grupa docelowa.md`.
+- Nic -> domyślny profil z `Grupa docelowa.md`, powiedz jednym zdaniem, czego szukasz.
+
+Ustal liczbę firm (domyślnie z `config.template.md`/Config). Powyżej ~15 na przebieg ostrzeż, że potrwa (każda to audyt), i zaproponuj tury.
 
 ## Krok 2 - discovery
 
-Cel: lista firm z nazwą i adresem strony.
+Cel: lista firm z nazwą, stroną, segmentem. Źródła i dobór wg segmentu: `blueprints/zrodla.md` (napędzane `Grupa docelowa.md`).
 
-1. Wybierz źródła z configu. Katalog źródeł i sposób ich użycia:
-   `blueprints/zrodla.md`.
-2. Zbierz kandydatów. Odrzuć duplikaty i firmy, które już są w sejfie
-   (`grep -ril "<nazwa>" "<sejf>"`) - powiedz, które pominąłeś i dlaczego.
-3. Zastosuj dyskwalifikatory z configu **od razu**, zanim zaczniesz zbierać dane.
-   Nie ma sensu audytować firmy, która i tak odpadnie.
+1. Znajdź kandydatów z serwisów/katalogów pod segment (Firecrawl albo WebSearch).
+2. Odrzuć duplikaty i firmy już w sejfie: użyj narzędzia **Grep** (`-i -l` po nazwie firmy w sejfie), nie literalnego `grep` z powłoki (nie ma go na Windows) - powiedz, co pominąłeś.
+3. Zastosuj `dyskwalifikatory` z `Grupa docelowa.md` **od razu**, zanim zaczniesz audyt. Nie audytuj firmy, która i tak odpadnie.
+4. Zapisz `<folder>/.audit/_prospekty.json`: `[{name, url, source, rating, review_count, city, industry, segment}]`.
 
-Nie znalazłeś wystarczająco dużo firm -> powiedz, ile znalazłeś i z jakiego źródła,
-i zaproponuj konkretne rozszerzenie (inne miasto, sąsiednia branża, inne źródło).
-Nie dobieraj przypadkowych firm, żeby dobić do liczby.
+Za mało firm -> powiedz ile i skąd, zaproponuj rozszerzenie (inne miasto, sąsiednia branża, inne źródło). Nie dobieraj losowych, żeby dobić liczbę.
 
-## Krok 3 - zbierz dane
+## Krok 3 - audyt (per firma)
 
-Dla każdej firmy zbierz **tylko te pola, które są w configu**. Nie zbieraj wszystkiego,
-co się da - to jest różnica między notatką, którą się czyta, a raportem, który leży.
+Pełna procedura: `blueprints/audyt.md`. Dla każdej firmy zbierz **goły kolektor** `raw-signals.json` - odpalaj TYLKO sondy, których `zrodlo` jest w `Taksonomia.json` (metoda człowieka steruje kolektorem). Interpretacja sygnałów: `blueprints/dane-i-sygnaly.md`.
 
-Co gdzie sprawdzić i jak czytać sygnały: `blueprints/dane-i-sygnaly.md`.
+Twarde: każdy sygnał ma źródło; nie znalazłeś -> `[do ręki]`, nigdy zmyślona liczba; brak narzędzia degraduje do `[do ręki]`, nie blokuje. Incydent (martwa domena/5xx) -> zapisz flagi i przerwij audyt tej firmy.
 
-Twarde zasady:
+## Krok 4 - score (twardy skrypt)
 
-- **Każde twierdzenie ma źródło.** Przy każdej informacji zostaw link albo napisz,
-  skąd pochodzi. Bez tego człowiek nie może tego użyć w mailu, bo nie wie, czy to prawda.
-- **Nie znalazłeś -> napisz `nie znalazłem`.** Nigdy nie wypełniaj luki prawdopodobną
-  odpowiedzią. Zmyślony numer telefonu albo zmyślone imię decydenta to realna wtopa
-  przy pierwszym kontakcie.
-- **Nazwiska i kontakty tylko z publicznych, firmowych źródeł** (strona firmy, wizytówka,
-  oficjalny profil). Nie zbieraj prywatnych danych osób.
-- Strona nie odpowiada albo jest pusta -> zanotuj to jako fakt i idź dalej.
-  Martwa strona sama w sobie jest sygnałem.
+Uruchom łańcuchem `python3` -> `python` -> `py -3` (na Windows nie ma `python3`), pełną ścieżką:
 
-## Krok 4 - kwalifikacja
+```
+python3 "${CLAUDE_PLUGIN_ROOT}/skills/research/solutions/score.py" <raw-signals.json> <Taksonomia.json> <icp.json>
+```
 
-Dla każdej firmy zapisz jedno zdanie: **dlaczego to jest albo nie jest Twój klient**,
-oparte na tym, co faktycznie znalazłeś, a nie na wrażeniu.
-
-Posortuj wynik: najpierw firmy z najsilniejszym sygnałem, potem reszta.
-Firmy, które odpadły, zostaw na dole z krótkim powodem. To oszczędza powtórnego szukania.
+Zwraca deterministycznie: `score 1-100`, `dominant` (klasa+usługa+cena+severity), `secondary`, `hook_material`, `gate`. `gate=0` -> firma odpada, nie zakładaj pełnej notatki. Brak Pythona -> policz ręcznie wg formuły z docstringa `solutions/score.py` (jest tam jawnie).
 
 ## Krok 5 - zapis
 
-Zgodnie z `${CLAUDE_PLUGIN_ROOT}/wspolne/sejf.md`:
+Kształt notatki i tabeli: `blueprints/notatka.md`.
 
-1. **Notatka per firma** w folderze z configu, nazwa `<Nazwa firmy>.md`.
-   Zawiera: dane kontaktowe, co znalazłeś (z linkami), sygnały, jedno zdanie kwalifikacji,
-   i pustą sekcję `## Kontakt` na późniejsze notatki z rozmów.
-2. **Tabela zbiorcza** `Prospekty <RRRR-MM-DD>.md`: firma, strona, sygnał, ocena, link
-   do notatki wikilinkiem.
-3. Notatka o firmie już istnieje -> nie nadpisuj. Pokaż różnice i zapytaj,
-   czy dopisać aktualizację z datą.
+1. **Notatka per firma** w folderze z Config, nazwa `<Nazwa firmy>.md`: score, dominujący problem -> Twoja usługa, dowody-sygnały z linkami, haczyk, `[Do ręki]`, ocena, pusta `## Kontakt`.
+2. **Tabela zbiorcza** `Prospekty <RRRR-MM-DD>.md`, sortuj po score, odpadłe na dole z powodem.
+3. Notatka firmy już istnieje -> nie nadpisuj, pokaż różnice, zapytaj o aktualizację z datą.
 
-Na koniec pokaż w czacie **skrót**: ile firm, ile się kwalifikuje, trzy najlepsze z jednozdaniowym
-uzasadnieniem, gdzie leżą pliki. Nie wklejaj całej tabeli do odpowiedzi.
-
-Zaproponuj następny krok: napisać do najlepszej firmy (`/bfc:cold-mail`).
+Na koniec skrót w czacie: ile firm, ile się kwalifikuje (score > próg), top 3 ze score i jednozdaniowym uzasadnieniem, gdzie pliki. Nie wklejaj całej tabeli. Zaproponuj `/bfc:cold-mail` na najlepszą (weźmie haczyk i dominujący problem z notatki).
 
 ## Ton i jakość
 
-Notatka ma być czytelna dla człowieka, który za tydzień do niej wróci.
-Obowiązuje `${CLAUDE_PLUGIN_ROOT}/wspolne/jakosc-pl.md`.
+Notatka czytelna dla człowieka, który wróci do niej za tydzień. Obowiązuje `${CLAUDE_PLUGIN_ROOT}/wspolne/jakosc-pl.md`.

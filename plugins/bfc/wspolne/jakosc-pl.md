@@ -32,6 +32,25 @@ Nigdy nie używaj:
 - "Wyobraź sobie, że" jako otwarcie maila
 - "Mam nadzieję, że mail zastanie Pana w dobrym zdrowiu"
 - "Piszę do Pana, ponieważ" jako pierwsze zdanie
+- "Co ciekawe" / "Co więcej" / "Warto zauważyć" / "Warto pamiętać" / "Kluczowe jest"
+- "Podsumowując" / "Reasumując" / "Na koniec warto dodać"
+- "W erze X" / "W świecie X" / "W dobie X"
+- "Z przyjemnością" / "Śpieszę donieść" / "Śpieszę z odpowiedzią"
+
+### 2b. Konstrukcja-antyteza (najczęstszy odcisk AI)
+
+Zakazana rama „zaprzeczam-potwierdzam", w każdej odmianie:
+
+- "To nie jest tylko X, ale przede wszystkim Y"
+- "Nie chodzi o X. Chodzi o Y"
+- "X to nie Y. To Z"
+- "To nie [rzecz]. To [wzniosłe przeformułowanie tej samej rzeczy]"
+
+Ta konstrukcja nie jest niczyim stylem. To echo modelu. Napisz to, co masz do powiedzenia, wprost, jednym zdaniem twierdzącym.
+
+### 2c. Fałszywy entuzjazm
+
+Bez wykrzykników w tekście do klienta (jeden, celowy, na całą wiadomość to max). Bez "Świetne pytanie!", "Genialnie!", "Uwielbiam ten pomysł!". Bez emoji jako ozdoby, a już na pewno nie emoji przy każdym punkcie listy. Spokojny, rzeczowy ton czyta się jak człowiek, który wie, co robi. Entuzjazm na siłę czyta się jak bot.
 
 ### 3. Ozdobniki, które nic nie znaczą
 

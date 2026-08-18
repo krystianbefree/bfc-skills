@@ -26,6 +26,8 @@ Nigdy nie zapisujemy tam niczego. Dane użytkownika trzymamy w dwóch miejscach:
    python3 "${CLAUDE_PLUGIN_ROOT}/wspolne/wykryj-sejf.py"
    ```
 
+   Na Windows nie ma `python3` - uruchom łańcuchem `python3` -> `python` -> `py -3` (patrz `narzedzia.md`).
+
    - **Jeden wynik** -> pokaż go i poproś o potwierdzenie jednym pytaniem
      (`AskUserQuestion`, opcje: "Tak, ten" / "Chcę inny").
    - **Kilka wyników** -> `AskUserQuestion` z listą wykrytych sejfów jako opcjami.

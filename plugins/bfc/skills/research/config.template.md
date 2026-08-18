@@ -3,42 +3,20 @@ utworzone: {{DATA}}
 skill: bfc/research
 ---
 
-# Konfiguracja: research
+# Konfiguracja: research (ustawienia przebiegu)
 
-Twoje ustawienia szukania firm. Zwykła notatka, poprawiaj ręcznie kiedy chcesz.
-Pola oznaczone `TODO:` skill dopyta przy następnym uruchomieniu.
+Profil klienta, segment, źródła i metoda oceny **nie są tutaj** - są w fundamencie z `/bfc:start`:
+`Grupa docelowa.md` (kogo szukasz + gdzie opinie), `Oferta.md` (co sprzedajesz + problem -> usługa),
+`Metoda prospectingu.md` (jak oceniasz firmę). Tu zostają tylko ustawienia jednego przebiegu.
 
-## Kogo szukamy
+## Ustawienia
 
-- **Profil firmy:** {{profil_firmy}}
-- **Wielkość:** {{wielkosc}}
-- **Lokalizacja:** {{lokalizacja}}
-- **Ile firm na przebieg:** {{ile_firm}}
+- **Folder wyników:** {{folder_wynikow}}
+- **Ile firm na turę:** {{ile_firm}}
+- **Próg kwalifikacji (score):** {{prog_score}}
 
-## Skąd
+## Nadpisania (opcjonalne)
 
-- **Źródła:** {{zrodla}}
-
-## Sygnały, że warto
-
-{{sygnaly}}
-
-## Co zbieramy
-
-{{dane}}
-
-## Kogo odpuszczamy
-
-{{dyskwalifikatory}}
-
-## Gdzie zapisujemy
-
-- **Folder w sejfie:** {{folder_wynikow}}
-
----
-
-## Notatki własne
-
-Dopisz tu wszystko, o co skill nie zapytał, a co ma wiedzieć przy szukaniu.
-Na przykład konkretne firmy do pominięcia, nazwy konkurencji, słowa kluczowe,
-po których łatwiej trafić na Twoich klientów.
+Dopisz tu jednorazowe rzeczy, których nie ma w fundamencie, a mają obowiązywać przy szukaniu:
+konkretne firmy do pominięcia, słowa kluczowe ułatwiające trafienie, chwilowe zawężenie segmentu.
+Trwałe zmiany profilu rób w fundamencie przez `/bfc:start` (tryb zmiana), nie tutaj.

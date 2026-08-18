@@ -1,7 +1,9 @@
-# Dane i sygnały
+# Dane i sygnały - jak je czytać
 
-Co sprawdzić przy firmie i jak z tego wyciągnąć wniosek, który da się wykorzystać w rozmowie.
-Zbieraj **tylko** kategorie zaznaczone w `Config.md`.
+Jak z surowego odczytu wyciągnąć wniosek, który da się wykorzystać w rozmowie. **Mechanikę zbierania**
+(jakimi narzędziami, kształt `raw-signals.json`) masz w `blueprints/audyt.md`; **liczenie score** i wybór
+dominującego problemu robi `solutions/score.py`; **format notatki** jest w `blueprints/notatka.md`.
+Ten plik to warstwa interpretacji: człowiek → wniosek.
 
 ## Kontakt i kto decyduje
 
@@ -69,44 +71,8 @@ Co świadczy o budżecie:
   To jest najczystszy sygnał, jaki dostaniesz.
 - Widoczna niespójność: świetny produkt, fatalna prezentacja. Albo odwrotnie.
 
-## Zapis: format notatki o firmie
+## Zasada nadrzędna
 
-```markdown
----
-utworzone: RRRR-MM-DD
-skill: bfc/research
----
-
-# <Nazwa firmy>
-
-- **Strona:** <adres>
-- **Branża:** <branża>
-- **Wielkość:** <szacunkowo, na jakiej podstawie>
-- **Kontakt:** <mail / telefon albo "nie znalazłem">
-- **Decyduje:** <imię i rola albo "nie znalazłem">
-
-## Co robią
-
-<Dwa, trzy zdania ich własnymi słowami ze strony. Nie parafraza marketingowa.>
-
-## Co zauważyłem
-
-- <Obserwacja> - źródło: <link>
-- <Obserwacja> - źródło: <link>
-
-## Sygnały
-
-- **Budżet:** <co na to wskazuje albo "brak sygnałów">
-- **Ból:** <co konkretnie i skąd to wiadomo>
-
-## Ocena
-
-<Jedno zdanie: dlaczego to jest albo nie jest Twój klient. Konkretnie, bez ogólników.>
-
-## Kontakt
-
-<Pusta sekcja. Tu dopisujesz, co się działo: kiedy pisałeś, co odpowiedzieli.>
-```
-
-Sekcja `Co zauważyłem` bez linku jest bezwartościowa. Człowiek musi móc sprawdzić,
-zanim to wyśle, bo to jego nazwisko idzie pod mailem.
+Każdy sygnał, który trafia do notatki, ma **link albo źródło**. Sygnał bez linku jest bezwartościowy -
+człowiek musi móc sprawdzić fakt, zanim wyśle maila, bo to jego nazwisko idzie pod spodem. Format
+notatki: `blueprints/notatka.md`.
