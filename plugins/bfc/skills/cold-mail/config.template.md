@@ -36,8 +36,11 @@ Pola oznaczone `TODO:` skill dopyta przy następnym uruchomieniu.
 
 ## Co u mnie zadziałało
 
-Dopisuj tu wiadomości, na które ktoś odpisał, i jednym zdaniem dlaczego Twoim zdaniem zadziałały.
-Skill czyta tę sekcję i próbuje trafić w to, co u Ciebie działa, zamiast zgadywać.
+Twoje ręczne notatki taktyczne: które otwarcia dostały odpowiedź. To co innego niż reguły
+stylu - te skill sam dopisuje do sekcji „Reguły z pętli uczenia" w `Głos.md`, gdy poprawiasz
+maile. Tutaj chodzi o skuteczność otwarć, tam o Twój głos.
+
+Dopisuj wiadomości, na które ktoś odpisał, i jednym zdaniem dlaczego Twoim zdaniem zadziałały.
 
 ```
 ### <data> - <firma albo branża>

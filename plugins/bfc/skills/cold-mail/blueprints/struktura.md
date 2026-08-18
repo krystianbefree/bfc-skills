@@ -4,7 +4,7 @@ Cztery elementy. Ta sama logika co w ofercie, tylko ściśnięta do kilku zdań.
 
 ## 1. Haczyk
 
-Pierwsze zdanie o nich. Zawsze.
+Pierwsze zdanie o nich. Zawsze. Bazę masz gotową w notatce researchu (`Haczyk na pierwsze zdanie maila`) - tu wybierasz typ i przekładasz go na głos człowieka (`glos-w-mailu.md`), nie wymyślasz faktu od zera.
 
 Cztery typy, wybierz ten, pod który masz materiał:
 

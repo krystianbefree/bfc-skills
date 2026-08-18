@@ -4,7 +4,8 @@ Dwie partie, krótko. Mechanika: `${CLAUDE_PLUGIN_ROOT}/wspolne/onboarding.md`.
 Szablon wyniku: `config.template.md` -> `<sejf>/BFC Skille/cold-mail/Config.md`.
 
 Nie pytaj o ton, dowody ani czerwone linie - to jest w `Profil.md`.
-Nie pytaj o usługi ani ceny - to jest w `Config.md` skilla oferta, przeczytaj go, jeśli istnieje.
+Nie pytaj o usługi ani ceny - to jest w `Oferta.md` (fundament z `/bfc:start`), przeczytaj go, jeśli istnieje.
+Nie pytaj o styl ani głos - to jest w `Głos.md`. Ten wywiad ustala tylko ustawienia przebiegu (kanał, długość, follow-upy).
 
 ---
 
