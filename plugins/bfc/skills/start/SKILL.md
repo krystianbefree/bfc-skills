@@ -31,6 +31,7 @@ Po wywiadzie pokaż, co dalej:
 | Skill | Do czego | Czyta fundament |
 | --- | --- | --- |
 | `/bfc:research` | Znajdź i zaudytuj firmy pod Twój profil, ze score | Grupa docelowa, Metoda prospectingu |
+| `/bfc:sygnaly` | Obserwuj firmy i dowiedz się, która ma powód kupić teraz | Oferta, Grupa docelowa, Metoda prospectingu |
 | `/bfc:cold-mail` | Napisz pierwszą wiadomość i follow-upy jak Ty | Głos, Oferta, Dowody + research |
 | `/bfc:oferta` | Napisz ofertę dla konkretnego klienta | Oferta, Dowody |
 | `/bfc:panel` | Żywy panel nad tym wszystkim (lejek, kasa, zadania) | notatki z sejfu |
@@ -41,7 +42,7 @@ Zapytaj, czy odpalamy któryś od razu.
 
 ## Tryb: status
 
-1. Sprawdź, co z fundamentu istnieje w `<sejf>/BFC Skille/`: `Profil.md`, `Oferta.md`, `Grupa docelowa.md`, `Metoda prospectingu.md`, `Dowody.md`, `Głos.md`, oraz `Config.md` w podfolderach skilli (`<sejf>/BFC Skille/research/`, `oferta/`, `cold-mail/`, `panel/`).
+1. Sprawdź, co z fundamentu istnieje w `<sejf>/BFC Skille/`: `Profil.md`, `Oferta.md`, `Grupa docelowa.md`, `Metoda prospectingu.md`, `Dowody.md`, `Głos.md`, oraz `Config.md` w podfolderach skilli (`<sejf>/BFC Skille/research/`, `oferta/`, `cold-mail/`, `panel/`, `sygnaly/` - tam też `Mapa sygnałów.md`).
 2. W każdym istniejącym policz pola `TODO:` i rzeczy oznaczone `[do ręki]`.
 3. Pokaż tabelę: pozycja, stan (`gotowe` / `brak` / `N do uzupełnienia`), ścieżka.
 4. Sprawdź narzędzia: `bash "${CLAUDE_PLUGIN_ROOT}/wspolne/wykryj-narzedzia.sh"` i dopisz jedną linię o tym, co dostępne.

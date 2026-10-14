@@ -32,6 +32,7 @@ Co bierzesz z notatki researchu (rozpoznasz ją po nagłówkach):
 - **`Dowody-sygnały`** (każdy z linkiem) - fakty, które możesz zacytować. Każdy jest sprawdzalny; niczego nie dokładaj od siebie.
 - **`[Do ręki]`** - czego automat nie sprawdził. Nie zgaduj tego w mailu; jak potrzebujesz, sprawdź ręcznie albo zostaw.
 - **`Problemy poboczne`** - NIE do pierwszej wiadomości. Najwyżej pół zdania „na rozmowę".
+- **`## Sygnały`** (dopisuje `/bfc:sygnaly`) - jeśli jest wpis z ostatnich 90 dni, **pierwsze zdanie opierasz na najświeższym sygnale** (fakt publiczny i zawodowy, z linkiem), a haczyk z audytu idzie jako hipoteza problemu („zakładam, że…"). Nie piszesz o tym, co firmie się przytrafiło, ani o niczym prywatnym. Zasady: `${CLAUDE_PLUGIN_ROOT}/skills/sygnaly/blueprints/interpretacja.md`, sekcja o wiadomości. Firma trafiła do Ciebie z przeglądu bez sygnału -> zwykły haczyk z audytu, bez udawania, że coś się u nich zmieniło.
 
 ## Krok 2 - wybierz JEDNĄ rzecz
 
@@ -81,6 +82,8 @@ Kluczowe: **każdy follow-up wnosi coś nowego.** „Chciałem się przypomnieć
 
 1. Zapisz do folderu z `Config.md`, nazwa `Kontakt - <Nazwa firmy> - <RRRR-MM-DD>.md`. Plik zawiera pierwszą wiadomość i całą sekwencję follow-upów z terminami.
 2. Jeśli w sejfie jest notatka researchu o tej firmie, dopisz do jej sekcji `## Kontakt` jedną linijkę: data i że wiadomość została przygotowana. Bez kopiowania całej treści.
+   Firma jest na liście obserwowanych sygnałów -> po potwierdzeniu, że wiadomość poszła, ustaw jej status: `python3 "${CLAUDE_PLUGIN_ROOT}/skills/sygnaly/solutions/sygnaly.py" status "<sejf>/BFC Skille/sygnaly" <id> napisano` (id z komendy `lista`). Skan przestanie ją sprawdzać, a skrypt zapamięta, na jakich sygnałach stała wiadomość.
+   Gdy człowiek później powie, że odpisali, umówił spotkanie, podpisał zlecenie albo że była cisza -> ta sama ścieżka, komenda `wynik ... <id> odpisali|spotkanie|klient|cisza`. Z tego `/bfc:sygnaly` uczy się, które sygnały dają mu odpowiedzi.
 3. W czacie pokaż wiadomość i follow-upy w całości, gotowe do skopiowania.
 4. Pod spodem krótko: na czym ta wiadomość stoi i czego brakowało w danych.
 

@@ -11,9 +11,9 @@
       "name": "bfc",
       "displayName": "Be Free Club - skille",
       "source": "./plugins/bfc",
-      "description": "Research firm, oferty i cold maile. Przy pierwszym uruchomieniu kazdy skill pyta o Twoje dane (branza, zrodla, pricing, ton) i zapisuje je w Twoim sejfie Obsidian.",
+      "description": "Research firm, sygnaly zakupowe w obserwowanych firmach, oferty i cold maile. Przy pierwszym uruchomieniu kazdy skill pyta o Twoje dane (branza, zrodla, pricing, ton) i zapisuje je w Twoim sejfie Obsidian.",
       "category": "Productivity",
-      "tags": ["freelance", "sprzedaz", "research", "oferta", "cold-mail", "polski"]
+      "tags": ["freelance", "sprzedaz", "research", "sygnaly", "oferta", "cold-mail", "polski"]
     },
     {
       "name": "bfc-admin",

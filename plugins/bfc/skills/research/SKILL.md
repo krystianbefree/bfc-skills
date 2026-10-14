@@ -68,6 +68,17 @@ Kształt notatki i tabeli: `blueprints/notatka.md`.
 
 Na koniec skrót w czacie: ile firm, ile się kwalifikuje (score > próg), top 3 ze score i jednozdaniowym uzasadnieniem, gdzie pliki. Nie wklejaj całej tabeli. Zaproponuj `/bfc:cold-mail` na najlepszą (weźmie haczyk i dominujący problem z notatki).
 
+## Krok 6 - propozycja obserwacji sygnałów
+
+Firmy, które się kwalifikują, ale nie mają jeszcze powodu, żeby kupić **teraz**, są idealne do obserwacji: `/bfc:sygnaly` będzie pilnował zmian (KRS, strona, ogłoszenia, opinie) i da znać, kiedy coś się ruszy. Lista ma się sama aktualizować, ale **tylko za zgodą człowieka**.
+
+1. Weź firmy ze score powyżej progu, które nie są jeszcze obserwowane. Sprawdź to komendą listy (pełna ścieżka i łańcuch Pythona jak w Kroku 4): `python3 "${CLAUDE_PLUGIN_ROOT}/skills/sygnaly/solutions/sygnaly.py" lista "<sejf>/BFC Skille/sygnaly"`.
+2. `AskUserQuestion` z `multiSelect`: „Które z tych firm dodać do obserwacji sygnałów?". Opcje: maksymalnie 4 najlepsze, w opisie score i dominujący problem. Więcej kandydatów -> po wyborze zapytaj, czy dodać też resztę.
+3. Wybrane zapisz do pliku JSON (pola i kształt: `${CLAUDE_PLUGIN_ROOT}/skills/sygnaly/blueprints/obserwowane.md`, z `zrodlo: research`, `notatka` = nazwa notatki firmy, `score`, oraz tym, co audyt już znalazł: strona, miasto, branża, segment, Instagram, link do Google Maps) i dodaj: `python3 "${CLAUDE_PLUGIN_ROOT}/skills/sygnaly/solutions/sygnaly.py" init "<sejf>/BFC Skille/sygnaly"`, potem `... dodaj "<sejf>/BFC Skille/sygnaly" <plik.json>`.
+4. Jedno zdanie: ile dodane i że skan uruchamia się komendą `/bfc:sygnaly`. Nie skanuj teraz.
+
+Człowiek nie chce nic dodawać -> nie pytaj ponownie w tej sesji.
+
 ## Ton i jakość
 
 Notatka czytelna dla człowieka, który wróci do niej za tydzień. Obowiązuje `${CLAUDE_PLUGIN_ROOT}/wspolne/jakosc-pl.md`.

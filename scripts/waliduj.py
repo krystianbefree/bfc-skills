@@ -28,6 +28,8 @@ PLIKI_RUNTIME = {
     "Pozyskiwanie.md", "Kasa.md", "Do nagrania.md", "Zasięgi.md",
     # Notatki-fundamenty tworzone przez /bfc:start w sejfie uzytkownika.
     "Oferta.md", "Grupa docelowa.md", "Metoda prospectingu.md", "Dowody.md", "Głos.md",
+    # Notatki tworzone przez /bfc:sygnaly w sejfie uzytkownika.
+    "Mapa sygnałów.md", "Obserwowane.md",
 }
 
 KOD_INLINE = re.compile(r"`[^`]*`")

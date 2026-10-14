@@ -59,9 +59,19 @@ Nigdy nie zapisujemy tam niczego. Dane użytkownika trzymamy w dwóch miejscach:
 ├── oferta/
 │   ├── Config.md
 │   └── <wyniki: oferty>
-└── cold-mail/
+├── cold-mail/
+│   ├── Config.md
+│   └── <wyniki: wiadomości i sekwencje>
+└── sygnaly/
     ├── Config.md
-    └── <wyniki: wiadomości i sekwencje>
+    ├── Mapa sygnałów.md         # jakich sygnałów szukasz i co znaczą dla Twojej usługi
+    ├── Obserwowane.md           # widok listy, generuje skrypt
+    ├── Raport sygnałów <data>.md
+    ├── obserwowane.json         # lista, historia sygnałów, wyniki wiadomości (prowadzi skrypt)
+    ├── ustawienia.json          # ustawienia z Config.md dla skryptu
+    ├── linkedin/                # tu człowiek wrzuca eksport Connections.csv
+    ├── stan/                    # ostatni odczyt każdej firmy (do wykrywania zmian)
+    └── .kopie/                  # kopie lejka panelu przed dopisaniem firm z sygnałem
 ```
 
 Katalog skilla zakładaj dopiero wtedy, gdy dany skill jest pierwszy raz używany.

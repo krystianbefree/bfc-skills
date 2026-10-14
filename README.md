@@ -14,6 +14,7 @@ Obsidian, a skill od tej pory pracuje pod Ciebie, nie pod jakiegoś abstrakcyjne
 | `/bfc:start` | Wywiad startowy, status konfiguracji, zmiana ustawień |
 | `/bfc:panel` | Stawia żywy panel operacyjny nad Twoim sejfem: pozyskiwanie, klienci, kasa, czas, archiwum efektów. Sam pilnuje statusu zadań z rozmowy |
 | `/bfc:research` | Znajduje firmy pod Twój profil klienta i robi z nich notatki w sejfie |
+| `/bfc:sygnaly` | Obserwuje wybrane firmy i mówi, która właśnie ma powód kupić (KRS, ogłoszenia, strona, opinie, reklamy, dotacje, zmiany pracy dawnych klientów) |
 | `/bfc:oferta` | Pisze ofertę pod konkretnego klienta, z Twoim pricingiem i Twoimi dowodami |
 | `/bfc:cold-mail` | Pisze pierwszą wiadomość i follow-upy oparte na tym, co research faktycznie znalazł |
 
@@ -97,6 +98,30 @@ wkleić. Wszystko lokalnie, klucze API zostają na Twojej maszynie.
 Działa na macOS, Linux i **Windows** (na Windowsie panel startuje `python solutions\panel.py`
 albo dwuklik `panel.cmd`; zakładka Terminal jest tylko na macOS/Linux, reszta ta sama).
 Serwer sam zakłada środowisko i doinstalowuje zależności przy pierwszym uruchomieniu.
+
+## Sygnały (`/bfc:sygnaly`)
+
+Prospecting na sygnałach: zamiast pisać do każdej firmy z listy, piszesz do tych, u których właśnie
+coś się zmieniło. Przy pierwszym uruchomieniu krótki wywiad ustala, które zmiany są sygnałem dla
+**Twojej** usługi (np. ogłoszenie o handlowca, które wraca, jest sygnałem dla kogoś od automatyzacji
+obsługi zapytań, a szumem dla grafika).
+
+- Firmy dodajesz ręcznie albo z `/bfc:research` - research sam zaproponuje, które obserwować,
+  i zapyta o zgodę.
+- Skan odpalasz na komendę. Darmowe źródła (rejestr KRS z historią, strona firmy z sitemapą,
+  narzędziami i ogłoszeniami w kodzie, archiwum strony) sprawdza skrypt i pokazuje tylko to, co się
+  zmieniło. Domyślnie skan lekki (prawie zero tokenów), pełny raz na kilka tygodni.
+- Sygnały widać od pierwszego skanu: skrypt sięga w historię KRS i w archiwum strony.
+- Tryb szukaj znajduje nowe firmy, które mają sygnał teraz (np. kto w Twoim mieście szuka handlowca).
+- Skill uczy się, które sygnały dają Ci odpowiedzi, i sam przestawia wagi.
+- Byli klienci w nowych firmach: raz w miesiącu wrzucasz eksport kontaktów z LinkedIna, skill wyłapuje
+  zmiany pracy w całej sieci, bez scrapowania.
+- Firmy z sygnałem trafiają do lejka w `/bfc:panel` i do zakładki Dziś.
+- Co 90 dni skill pokazuje firmy, które milczą, i decydujesz: obserwować dalej czy napisać
+  zwykłą wiadomość bez sygnału.
+- Opcjonalnie: klucz Apify (opinie Google, Instagram, płatne grosze) i token Meta Ad Library
+  (reklamy). Bez nich skill działa na darmowych źródłach. Klucze wpisujesz do pliku `.env`,
+  nigdy do czatu.
 
 ## Jak działać lepiej (opcjonalnie)
 
